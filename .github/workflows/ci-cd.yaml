@@ -49,12 +49,11 @@ jobs:
         run: docker push us-central1-docker.pkg.dev/project-fd98a236-27cd-4be4-987/myspringbootrepo/springboot-hello:${{ github.sha }}
 
       # Install Helm via apt-get
-      - name: Install Helm
-        - name: Install Helm 3.12.0
-          run: |
-            curl -fsSL https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz -o helm.tar.gz
-            tar -zxvf helm.tar.gz
-            sudo mv linux-amd64/helm /usr/local/bin/helm
+      - name: Install Helm 3.12.0
+        run: |
+          curl -fsSL https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz -o helm.tar.gz
+          tar -zxvf helm.tar.gz
+          sudo mv linux-amd64/helm /usr/local/bin/helm
 
 
       # Deploy with Helm
