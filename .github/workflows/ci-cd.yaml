@@ -55,7 +55,18 @@ jobs:
           tar -zxvf helm.tar.gz
           sudo mv linux-amd64/helm /usr/local/bin/helm
 
+      - name: Install Minikube
+        run:
+          curl -fsSL https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
-      # Deploy with Helm
+      - name: Start Minikube
+        run:
+          minikube start --driver=docker
+          kubectl cluster-info
+          kubectl get nodes
+      
+
+        # Deploy with Helm
       - name: Helm upgrade/install
         run: helm upgrade --install springboot-hello ./helm/springboot-hello --set image.repository=us-central1-docker.pkg.dev/project-fd98a236-27cd-4be4-987/springboot-hello-repo/springboot-hello --set image.tag=${{ github.sha }}
