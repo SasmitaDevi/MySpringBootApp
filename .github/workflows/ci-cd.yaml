@@ -54,18 +54,14 @@ jobs:
           curl -fsSL https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz -o helm.tar.gz
           tar -zxvf helm.tar.gz
           sudo mv linux-amd64/helm /usr/local/bin/helm
+      - name: Install Kind
+        run: |
+          curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+          chmod +x ./kind
+          sudo mv ./kind /usr/local/bin/kind
 
-      - name: Install Minikube
-        run:
-          curl -fsSL https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-          sudo install minikube-linux-amd64 /usr/local/bin/minikube
-
-      - name: Start Minikube
-        run:
-          minikube start --driver=docker
-          kubectl cluster-info
-          kubectl get nodes
-      
+      - name: Create Kind cluster
+        run: kind create cluster
 
         # Deploy with Helm
       - name: Helm upgrade/install
