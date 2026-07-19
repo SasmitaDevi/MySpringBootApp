@@ -63,6 +63,11 @@ jobs:
 #      - name: Create Kind cluster
 #        run: kind create cluster
         #update the cluster context to use GKE
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          install_components: gke-gcloud-auth-plugin
+
       - name: Configure kubectl
         run: gcloud container clusters get-credentials springboot-cluster --zone us-central1-a --project ${{ secrets.GCP_PROJECT_ID }}
         # Deploy with Helm
