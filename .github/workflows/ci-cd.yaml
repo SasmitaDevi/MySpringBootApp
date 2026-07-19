@@ -42,11 +42,11 @@ jobs:
 
       # Build Docker image
       - name: Build Docker image
-        run: docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_NUMBER }}/myspringbootrepo/springboot-hello:${{ github.sha }} .
+        run: docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID}}/myspringbootrepo/springboot-hello:${{ github.sha }} .
 
       # Push Docker image
       - name: Push Docker image
-        run: docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_NUMBER }}/myspringbootrepo/springboot-hello:${{ github.sha }}
+        run: docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/myspringbootrepo/springboot-hello:${{ github.sha }}
 
       # Install Helm via apt-get
       - name: Install Helm 3.12.0
@@ -65,4 +65,4 @@ jobs:
 
         # Deploy with Helm
       - name: Helm upgrade/install
-        run: helm upgrade --install springboot-hello ./springboot-hello --set image.repository=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_NUMBER }}/springboot-hello-repo/springboot-hello --set image.tag=${{ github.sha }}
+        run: helm upgrade --install springboot-hello ./springboot-hello --set image.repository=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/springboot-hello-repo/springboot-hello --set image.tag=${{ github.sha }}
