@@ -33,8 +33,8 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: projects/832085079574/locations/global/workloadIdentityPools/githubpool/providers/github
-          service_account: github@project-fd98a236-27cd-4be4-987.iam.gserviceaccount.com
+          workload_identity_provider: projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/githubpool/providers/github
+          service_account: github@${{ secrets.GCP_PROJECT_NUMBER }}.iam.gserviceaccount.com
 
       # Configure Docker for Artifact Registry
       - name: Configure Docker for Artifact Registry
@@ -42,11 +42,11 @@ jobs:
 
       # Build Docker image
       - name: Build Docker image
-        run: docker build -t us-central1-docker.pkg.dev/project-fd98a236-27cd-4be4-987/myspringbootrepo/springboot-hello:${{ github.sha }} .
+        run: docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_NUMBER }}/myspringbootrepo/springboot-hello:${{ github.sha }} .
 
       # Push Docker image
       - name: Push Docker image
-        run: docker push us-central1-docker.pkg.dev/project-fd98a236-27cd-4be4-987/myspringbootrepo/springboot-hello:${{ github.sha }}
+        run: docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_NUMBER }}/myspringbootrepo/springboot-hello:${{ github.sha }}
 
       # Install Helm via apt-get
       - name: Install Helm 3.12.0
@@ -65,4 +65,4 @@ jobs:
 
         # Deploy with Helm
       - name: Helm upgrade/install
-        run: helm upgrade --install springboot-hello ./springboot-hello --set image.repository=us-central1-docker.pkg.dev/project-fd98a236-27cd-4be4-987/springboot-hello-repo/springboot-hello --set image.tag=${{ github.sha }}
+        run: helm upgrade --install springboot-hello ./springboot-hello --set image.repository=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_NUMBER }}/springboot-hello-repo/springboot-hello --set image.tag=${{ github.sha }}
