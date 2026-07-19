@@ -54,15 +54,17 @@ jobs:
           curl -fsSL https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz -o helm.tar.gz
           tar -zxvf helm.tar.gz
           sudo mv linux-amd64/helm /usr/local/bin/helm
-      - name: Install Kind
-        run: |
-          curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
-          chmod +x ./kind
-          sudo mv ./kind /usr/local/bin/kind
-
-      - name: Create Kind cluster
-        run: kind create cluster
-
+#      - name: Install Kind
+#        run: |
+#          curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+#          chmod +x ./kind
+#          sudo mv ./kind /usr/local/bin/kind
+#
+#      - name: Create Kind cluster
+#        run: kind create cluster
+        #update the cluster context to use GKE
+      - name: Configure kubectl
+        run: gcloud container clusters get-credentials springboot-cluster --zone us-central1-a --project ${{ secrets.GCP_PROJECT_ID }}
         # Deploy with Helm
       - name: Helm upgrade/install
         run: helm upgrade --install springboot-hello ./springboot-hello --set image.repository=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/springboot-hello-repo/springboot-hello --set image.tag=${{ github.sha }}
