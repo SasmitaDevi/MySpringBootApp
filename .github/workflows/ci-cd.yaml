@@ -72,4 +72,4 @@ jobs:
         run: gcloud container clusters get-credentials springboot-cluster --zone us-central1-a --project ${{ secrets.GCP_PROJECT_ID }}
         # Deploy with Helm
       - name: Helm upgrade/install
-        run: helm upgrade --install springboot-hello ./springboot-hello --set image.repository=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/springboot-hello-repo/springboot-hello --set image.tag=${{ github.sha }}
+        run: helm upgrade --install springboot-hello ./springboot-hello --set image.repository=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/myspringbootrepo/springboot-hello --set image.tag=${{ github.sha }}
