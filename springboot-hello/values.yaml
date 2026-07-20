@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: myspringbootrepo/springboot-hello
+  repository: us-central1-docker.pkg.dev/project-fd98a236-27cd-4be4-987/myspringbootrepo/springboot-hello
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
