@@ -1,0 +1,20 @@
+stages:
+  - build
+  - test
+
+build-job:
+  stage: build
+  script:
+    - echo "Building GitHub repo..."
+    - mvn clean package
+  artifacts:
+    paths:
+      - target/*.jar
+
+test-job:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - mvn test
+  dependencies:
+    - build-job
